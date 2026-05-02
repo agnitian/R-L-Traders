@@ -1,16 +1,20 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "./build",
+  "env": {
+    "REACT_APP_API_URL": "@react_app_api_url"
+  },
   "routes": [
-    { "src": "/static/(.*)", "headers": { "cache-control": "public, max-age=31536000, immutable" }, "dest": "/static/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/static/(.*)",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "public, max-age=0, must-revalidate" },
+      "dest": "/index.html"
+    }
   ]
 }
